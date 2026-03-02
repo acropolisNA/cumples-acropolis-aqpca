@@ -17,14 +17,16 @@ export const getData = async () => {
   const {API,TYPE,SEDEID,EMAIL} = process.env
   const url = `${API}?type=${TYPE}&sedeId=${SEDEID}&email=${EMAIL}`
 
- try{
-  const goodRes:Promise<Response> = (await fetch(url,{
-    next: { revalidate:86400*3 } // validarlo cada dia
-  })).json()
+  console.log(url)
 
-  return (await goodRes)
- }catch(err){
-    const badRes:Response = {success: false}
-  return badRes
- }
+  try{
+    const goodRes:Promise<Response> = (await fetch(url,{
+      next: { revalidate:86400*3 } // validarlo cada dia
+    })).json()
+
+    return (await goodRes)
+  }catch(err){
+      const badRes:Response = {success: false}
+    return badRes
+  }
 }
